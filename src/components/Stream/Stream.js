@@ -3,7 +3,30 @@ import styles from './Stream.css';
 
 
 class Stream extends React.Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {isToggleOn: true};
+    
+        // This binding is necessary to make `this` work in the callback    
+        this.startPlayback = this.startPlayback.bind(this);  
+    
+    }
+     
+    startPlayback() {    
+        this.setState(prevState => ({      
+            isToggleOn: !prevState.isToggleOn    
+        })
+        );  
+    }; 
+
+
+    render(){
+
+        var DASH_PLAYERS = ['DASH.js', 'Shaka Player'];
+        //import {ability} from './modulename.js';
+        //console.log('access key', AWS_ACCESS_KEY)
+        var HLS_PLAYERS = ['HLS.js', 'Shaka Player', 'VideoJS'];
+
         return (
     
                 <div className={styles.Stream}>
@@ -132,7 +155,10 @@ class Stream extends React.Component {
                                             <label>Expires (seconds)</label>
                                             <input id="expires" type="text" className="form-control form-control-sm"/>
                                         </div>
-                                        <button id="start" type="submit" className="btn btn-primary">Start Playback</button>
+                                        <button id="start" type="submit" className="btn btn-primary" onClick={this.startPlayback}>
+                                            Start Playback
+                                            {this.state.isToggleOn ? 'ON' : 'OFF'}
+                                        </button>
                                     </div>
                                     <div className="col-md-8">
                                         <div id="playerContainer">
